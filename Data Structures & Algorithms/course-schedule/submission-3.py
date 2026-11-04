@@ -1,0 +1,29 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        preMap = { i : [] for i in range(numCourses) }
+
+        for crs, pre in prerequisites:
+            preMap[crs].append(pre)
+        
+        visitedSet = set()
+
+        def DFS(crs: int) -> bool:
+            if crs in visitedSet:
+                return False
+
+            if preMap[crs] == []:
+                return True
+
+            visitedSet.add(crs)
+
+            for pre in preMap[crs]:
+                if not DFS(pre):
+                    return False   
+            visitedSet.remove(crs) 
+            preMap[crs] = []
+            return True
+
+        for crs in range(numCourses):
+            if not DFS(crs):
+                return False
+        return True       
