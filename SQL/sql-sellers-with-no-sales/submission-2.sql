@@ -1,0 +1,8 @@
+-- Write your query below
+SELECT s.seller_name 
+FROM seller s
+WHERE seller_id NOT IN (
+    SELECT o.seller_id
+    FROM orders o
+    WHERE o.sale_date >= '2020-01-01' AND o.sale_date <= '2020-12-31'
+) ORDER BY s.seller_name ASC;
